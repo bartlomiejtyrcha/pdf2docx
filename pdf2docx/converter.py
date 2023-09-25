@@ -214,7 +214,14 @@ class Converter:
             filename = docx_filename
 
         else:
-            filename = docx_filename or f'{self.filename_pdf[0:-len(".pdf")]}.docx' if self.filename_pdf else "output.docx"
+            if not docx_filename:
+                if self.filename_pdf:
+                    filename = f'{self.filename_pdf[0:-len(".pdf")]}.docx'
+                else:
+                    filename = "output.docx"
+            else:
+                filename = docx_filename
+                
             if os.path.exists(filename): os.remove(filename)
 
         # create page by page        
